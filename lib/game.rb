@@ -29,7 +29,7 @@ class Game
 
   def claim_field( row, column )
     @row, @column = row - 1, column - 1 #change number to access board array
-    raise "The field has already been taken" if the_field_unavailable?
+    raise "The field has already been taken" if field_unavailable?
     take_field
     set_game_over if all_fields_taken? || win?
     return "#{current_player} win!" if win?
@@ -75,7 +75,7 @@ class Game
     self.board[self.row][self.column] = current_player
   end
 
-  def the_field_unavailable?
+  def field_unavailable?
     board[self.row][self.column] != false
   end
 
