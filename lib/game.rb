@@ -78,12 +78,13 @@ class Game
   end
 
   def got_a_row?( row, column )
-    self.board[row].all?{ |player| player == current_player }
+    target = board[row]
+    all_same_player?( target )
   end
 
   def got_a_column?( row, column )
-    target = self.board.map.each{ |row| row[column] } #collect players from the column
-    target.all?{ |player| player == current_player }
+    target = board.map.each{ |row| row[column] } #collect players from the column
+    all_same_player?( target )
   end
 
   def got_a_diagonal( row, column )
@@ -92,6 +93,10 @@ class Game
     for i in 0...number
       target << board[i][i]
     end
+    all_same_player?( target )
+  end
+
+  def all_same_player?( target )
     target.all?{ |player| player == current_player }
   end
 
