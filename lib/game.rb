@@ -1,3 +1,5 @@
+require_relative './player.rb'
+
 class Game
 
   attr_accessor :player1, :player2, :current_player, :board, :over
@@ -28,10 +30,10 @@ class Game
     row = row - 1       #change row number for board array
     column = column - 1 #change column number for board array
     raise "The field has already been taken" if the_field_unavailable?( row, column )
-    self.board[row][column] = self.current_player
+    self.board[row][column] = current_player
     if win?( row, column )
       set_game_over
-      return "You win!"
+      return "#{current_player} win!"
     end
     set_game_over if all_fields_taken?
     change_turn
@@ -46,7 +48,7 @@ class Game
   end
 
   def all_fields_taken?
-    self.board.flatten.all?
+    board.flatten.all?
   end
 
   private
@@ -60,37 +62,37 @@ class Game
   end
 
   def previous_turn_by_player1?
-    self.current_player == self.player1
+    self.current_player == player1
   end
 
   def set_player1_turn
-    self.current_player = self.player1
+    self.current_player = player1
   end
 
   def set_player2_turn
-    self.current_player = self.player2
+    self.current_player = player2
   end
 
   def the_field_unavailable?( row, column )
-    self.board[row][column] != false
+    board[row][column] != false
   end
 
   def got_a_row?( row, column )
-    self.board[row].all?{ |player| player == self.current_player }
+    self.board[row].all?{ |player| player == current_player }
   end
 
   def got_a_column?( row, column )
     target = self.board.map.each{ |row| row[column] } #collect players from the column
-    target.all?{ |player| player == self.current_player }
+    target.all?{ |player| player == current_player }
   end
 
   def got_a_diagonal( row, column )
-    number = self.board.count
+    number = board.count
     target = []
     for i in 0...number
-      target << self.board[i][i]
+      target << board[i][i]
     end
-    target.all?{ |player| player == self.current_player }
+    target.all?{ |player| player == current_player }
   end
 
 end

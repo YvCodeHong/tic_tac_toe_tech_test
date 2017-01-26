@@ -49,7 +49,7 @@ describe Game, 'features' do
     game.change_turn
     game.claim_field(1,2)
     game.change_turn
-    expect( game.claim_field(1,3) ).to eq("You win!")
+    expect( game.claim_field(1,3) ).to eq("#{game.current_player} win!")
     reset_board
     # in a column
     game.start
@@ -57,7 +57,7 @@ describe Game, 'features' do
     game.change_turn
     game.claim_field(2,1)
     game.change_turn
-    expect( game.claim_field(3,1) ).to eq("You win!")
+    expect( game.claim_field(3,1) ).to eq("#{game.current_player} win!")
     reset_board
     # in a diagonal
     game.start
@@ -65,7 +65,7 @@ describe Game, 'features' do
     game.change_turn
     game.claim_field(2,2)
     game.change_turn
-    expect( game.claim_field(3,3) ).to eq("You win!")
+    expect( game.claim_field(3,3) ).to eq("#{game.current_player} win!")
   end
 
   # A game is over if a player wins
