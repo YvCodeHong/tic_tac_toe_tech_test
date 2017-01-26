@@ -48,21 +48,21 @@ describe Game, 'features' do
     game.change_turn
     game.claim_field(1,2)
     game.change_turn
-    expect( game.claim_field(1,3) ).to eq("you win!")
+    expect( game.claim_field(1,3) ).to eq("You win!")
     # in a column
     game.start
     game.claim_field(1,1)
     game.change_turn
     game.claim_field(2,1)
     game.change_turn
-    expect( game.claim_field(3,1) ).to eq("you win!")
+    expect( game.claim_field(3,1) ).to eq("You win!")
     # in a diagonal
     game.start
     game.claim_field(1,1)
     game.change_turn
     game.claim_field(2,2)
     game.change_turn
-    expect( game.claim_field(3,3) ).to eq("you win!")
+    expect( game.claim_field(3,3) ).to eq("You win!")
   end
 
   # A game is over if a player wins

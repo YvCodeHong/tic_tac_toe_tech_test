@@ -109,6 +109,15 @@ describe Game do
       game.current_player = game.player1
       expect( game.check_result( 2, 0 ) ).to eq("You win!")
     end
+    it "should give a message when a player claim all the fields in a diagonal" do
+      game.claim_field(1,1)
+      game.change_turn
+      game.claim_field(2,2)
+      game.change_turn
+      game.claim_field(3,3)
+      game.current_player = game.player1
+      expect( game.check_result( 2, 2 ) ).to eq("You win!")
+    end
   end
 
 end

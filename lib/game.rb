@@ -32,7 +32,7 @@ class Game
   end
 
   def check_result( row, column )
-    "You win!" if got_a_row?( row, column ) || got_a_column?( row, column )
+    "You win!" if got_a_row?( row, column ) || got_a_column?( row, column ) || got_a_diagonal( row, column )
   end
 
   private
@@ -67,6 +67,15 @@ class Game
 
   def got_a_column?( row, column )
     target = self.board.map.each{ |row| row[column] } #collect players from the column
+    target.all?{ |player| player == self.current_player }
+  end
+
+  def got_a_diagonal( row, column )
+    number = self.board.count
+    target = []
+    for i in 0...number
+      target << self.board[i][i]
+    end
     target.all?{ |player| player == self.current_player }
   end
 
