@@ -14,6 +14,14 @@ describe Game, 'features' do
   end
 
   # Players take turns until the game is over
+  it "should let players take turns until the game is over" do
+    game.add_player( player1 )
+    game.add_player( player2 )
+    game.start
+    expect( game.current_player ).to eq player1
+    game.change_current_player
+    expect( game.current_player ).to eq player2
+  end
 
   # A player can claim a field if it is not already taken
 

@@ -43,4 +43,19 @@ describe Game do
     end
   end
 
+  context "#change_current_player" do
+
+    before(:each) do
+      game.add_player( player_x )
+      game.add_player( player_o )
+      game.start
+    end
+
+    it "should change current player" do
+      expect( game.current_player ).to eq game.player1
+      game.change_current_player
+      expect( game.current_player ).to eq game.player2
+    end
+  end
+
 end
