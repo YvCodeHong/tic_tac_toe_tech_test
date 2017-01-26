@@ -3,6 +3,7 @@ require_relative './player.rb'
 class Game
 
   attr_accessor :player1, :player2, :current_player, :board, :over
+  attr_reader :row, :column
 
   def initialize
     self.board = [ [false, false, false],
@@ -27,18 +28,17 @@ class Game
   end
 
   def claim_field( row, column )
-    row, column = row - 1, column - 1 #change number to access board array
-    raise "The field has already been taken" if the_field_unavailable?( row, column )
-    take_field( row, column )
-    set_game_over if all_fields_taken? || win?( row, column )
-
-    return "#{current_player} win!" if win?( row, column )
+    @row, @column = row - 1, column - 1 #change number to access board array
+    raise "The field has already been taken" if the_field_unavailable?
+    take_field
+    set_game_over if all_fields_taken? || win?
+    return "#{current_player} win!" if win?
     return "draw!" if all_fields_taken?
     change_turn
   end
 
-  def win?( row, column )
-    got_a_row?( row, column ) || got_a_column?( row, column ) || got_a_diagonal( row, column )
+  def win?
+    got_a_row? || got_a_column? || got_a_diagonal
   end
 
   def set_game_over
@@ -71,25 +71,25 @@ class Game
     self.current_player = player2
   end
 
-  def take_field( row, column )
-    self.board[row][column] = current_player
+  def take_field
+    self.board[self.row][self.column] = current_player
   end
 
-  def the_field_unavailable?( row, column )
-    board[row][column] != false
+  def the_field_unavailable?
+    board[self.row][self.column] != false
   end
 
-  def got_a_row?( row, column )
-    target = board[row]
+  def got_a_row?
+    target = board[self.row]
     all_same_player?( target )
   end
 
-  def got_a_column?( row, column )
-    target = board.map.each{ |row| row[column] } #collect players from the column
+  def got_a_column?
+    target = board.map.each{ |row| row[self.column] } #collect players from the column
     all_same_player?( target )
   end
 
-  def got_a_diagonal( row, column )
+  def got_a_diagonal
     number = board.count
     target = []
     for i in 0...number

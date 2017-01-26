@@ -98,7 +98,7 @@ describe Game do
       game.change_turn
       game.claim_field(1,3)
       game.current_player = game.player1
-      expect( game.win?( 0, 2 ) ).to be true
+      expect( game.win? ).to be true
     end
     it "should give a message when a player claim all the fields in a column" do
       game.claim_field(1,1)
@@ -107,7 +107,7 @@ describe Game do
       game.change_turn
       game.claim_field(3,1)
       game.current_player = game.player1
-      expect( game.win?( 2, 0 ) ).to be true
+      expect( game.win? ).to be true
     end
     it "should give a message when a player claim all the fields in a diagonal" do
       game.claim_field(1,1)
@@ -116,7 +116,7 @@ describe Game do
       game.change_turn
       game.claim_field(3,3)
       game.current_player = game.player1
-      expect( game.win?( 2, 2 ) ).to be true
+      expect( game.win? ).to be true
     end
   end
 
