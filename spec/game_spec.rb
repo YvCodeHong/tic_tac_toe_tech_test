@@ -69,12 +69,17 @@ describe Game do
 
     it "should mark the field by current player" do
       game.claim_field(1,1)
-      expect( game.board[1-1] ).to be game.current_player
+      expect( game.board[1-1] ).to be game.player1
     end
 
     it "should raise an error when the field has already been taken" do
       game.claim_field(1,1)
       expect{ game.claim_field(1,1) }.to raise_error("The field has already been taken")
+    end
+
+    it "should change turn when a player claims a field" do
+      game.claim_field(1,1)
+      expect( game.current_player ).to eq game.player2
     end
 
   end
