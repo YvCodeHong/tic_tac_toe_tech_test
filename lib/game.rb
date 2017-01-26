@@ -1,6 +1,12 @@
 class Game
 
-  attr_accessor :player1, :player2, :current_player
+  attr_accessor :player1, :player2, :current_player, :board
+
+  def initialize
+    self.board = { 1-1=>false, 1-2=>false, 1-3=>false,
+                   2-1=>false, 2-2=>false, 2-3=>false,
+                   3-1=>false, 3-2=>false, 3-3=>false }
+  end
 
   def add_player( player )
     raise "Already two players exist" if player2_exist?
@@ -15,6 +21,10 @@ class Game
 
   def change_current_player
     previous_turn_by_player1? ? set_player2_current_player : set_player1_current_player
+  end
+
+  def claim_field( row, column )
+    self.board[row-column] = self.current_player
   end
 
   private

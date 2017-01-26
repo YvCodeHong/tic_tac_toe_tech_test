@@ -56,6 +56,22 @@ describe Game do
       game.change_current_player
       expect( game.current_player ).to eq game.player2
     end
+
+  end
+
+  context "#claim_field" do
+
+    before(:each) do
+      game.add_player( player_x )
+      game.add_player( player_o )
+      game.start
+    end
+
+    it "should mark the field by current player" do
+      game.claim_field(1,1)
+      expect( game.board[1-1] ).to be game.current_player
+    end
+
   end
 
 end
