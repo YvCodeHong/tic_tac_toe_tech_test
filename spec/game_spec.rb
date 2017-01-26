@@ -84,7 +84,7 @@ describe Game do
 
   end
 
-  context "#check_result" do
+  context "#win?" do
     before(:each) do
       game.add_player( player_x )
       game.add_player( player_o )
@@ -98,7 +98,7 @@ describe Game do
       game.change_turn
       game.claim_field(1,3)
       game.current_player = game.player1
-      expect( game.check_result( 0, 2 ) ).to eq("You win!")
+      expect( game.win?( 0, 2 ) ).to be true
     end
     it "should give a message when a player claim all the fields in a column" do
       game.claim_field(1,1)
@@ -107,7 +107,7 @@ describe Game do
       game.change_turn
       game.claim_field(3,1)
       game.current_player = game.player1
-      expect( game.check_result( 2, 0 ) ).to eq("You win!")
+      expect( game.win?( 2, 0 ) ).to be true
     end
     it "should give a message when a player claim all the fields in a diagonal" do
       game.claim_field(1,1)
@@ -116,7 +116,7 @@ describe Game do
       game.change_turn
       game.claim_field(3,3)
       game.current_player = game.player1
-      expect( game.check_result( 2, 2 ) ).to eq("You win!")
+      expect( game.win?( 2, 2 ) ).to be true
     end
   end
 

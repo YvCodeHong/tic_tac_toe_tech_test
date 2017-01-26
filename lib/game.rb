@@ -28,11 +28,12 @@ class Game
     column = column - 1 #change column number for board array
     raise "The field has already been taken" if the_field_unavailable?( row, column )
     self.board[row][column] = self.current_player
+    return "You win!" if win?( row, column )
     change_turn
   end
 
-  def check_result( row, column )
-    "You win!" if got_a_row?( row, column ) || got_a_column?( row, column ) || got_a_diagonal( row, column )
+  def win?( row, column )
+    got_a_row?( row, column ) || got_a_column?( row, column ) || got_a_diagonal( row, column )
   end
 
   private
