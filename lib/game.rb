@@ -32,7 +32,7 @@ class Game
   end
 
   def check_result( row, column )
-    "You win!" if got_a_row?( row, column )
+    "You win!" if got_a_row?( row, column ) || got_a_column?( row, column )
   end
 
   private
@@ -63,6 +63,11 @@ class Game
 
   def got_a_row?( row, column )
     self.board[row].all?{ |player| player == self.current_player }
+  end
+
+  def got_a_column?( row, column )
+    target = self.board.map.each{ |row| row[column] } #collect players from the column
+    target.all?{ |player| player == self.current_player }
   end
 
 end
