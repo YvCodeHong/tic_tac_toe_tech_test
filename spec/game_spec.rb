@@ -97,7 +97,8 @@ describe Game do
       game.claim_field(1,2)
       game.change_turn
       game.claim_field(1,3)
-      expect( game.check_result ).to eq("You win!")
+      game.current_player = game.player1
+      expect( game.check_result( 0, 2 ) ).to eq("You win!")
     end
   end
 
