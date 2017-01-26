@@ -27,15 +27,13 @@ class Game
   end
 
   def claim_field( row, column )
-    row = row - 1       #change row number for board array
-    column = column - 1 #change column number for board array
+    row, column = row - 1, column - 1 #change number to access board array
     raise "The field has already been taken" if the_field_unavailable?( row, column )
-    self.board[row][column] = current_player
-    if win?( row, column )
-      set_game_over
-      return "#{current_player} win!"
-    end
-    set_game_over if all_fields_taken?
+    take_field( row, column )
+    set_game_over if all_fields_taken? || win?( row, column )
+
+    return "#{current_player} win!" if win?( row, column )
+    return "draw!" if all_fields_taken?
     change_turn
   end
 
@@ -71,6 +69,10 @@ class Game
 
   def set_player2_turn
     self.current_player = player2
+  end
+
+  def take_field( row, column )
+    self.board[row][column] = current_player
   end
 
   def the_field_unavailable?( row, column )
