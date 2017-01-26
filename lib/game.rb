@@ -1,11 +1,12 @@
 class Game
 
-  attr_accessor :player1, :player2, :current_player, :board
+  attr_accessor :player1, :player2, :current_player, :board, :over
 
   def initialize
     self.board = [ [false, false, false],
                    [false, false, false],
                    [false, false, false] ]
+    self.over = false
   end
 
   def add_player( player )
@@ -28,12 +29,19 @@ class Game
     column = column - 1 #change column number for board array
     raise "The field has already been taken" if the_field_unavailable?( row, column )
     self.board[row][column] = self.current_player
-    return "You win!" if win?( row, column )
+    if win?( row, column )
+      set_game_over
+      return "You win!"
+    end
     change_turn
   end
 
   def win?( row, column )
     got_a_row?( row, column ) || got_a_column?( row, column ) || got_a_diagonal( row, column )
+  end
+
+  def set_game_over
+    self.over = true
   end
 
   private

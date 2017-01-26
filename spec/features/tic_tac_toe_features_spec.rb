@@ -69,6 +69,15 @@ describe Game, 'features' do
   end
 
   # A game is over if a player wins
+  it "should game over if a player wins" do
+    game.start
+    game.claim_field(1,1)
+    game.change_turn
+    game.claim_field(1,2)
+    game.change_turn
+    game.claim_field(1,3)
+    expect( game.over ).to eq true
+  end
 
   # A game is over when all fields are taken
 

@@ -120,4 +120,11 @@ describe Game do
     end
   end
 
+  context "#set_game_over" do
+    it "should set over setter true" do
+      game.set_game_over
+      expect( game.over ).to eq true
+    end
+  end
+
 end
