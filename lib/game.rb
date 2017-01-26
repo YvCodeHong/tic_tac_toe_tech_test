@@ -7,6 +7,11 @@ class Game
     player1_exist? ? self.player2 = player : self.player1 = player
   end
 
+  def start
+    raise "To start, require two players" if !player2_exist?
+    true
+  end
+
   private
 
   def player1_exist?

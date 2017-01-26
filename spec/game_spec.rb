@@ -27,4 +27,20 @@ describe Game do
     end
   end
 
+  context "#start" do
+    it "should start a game with two players" do
+      game.add_player( player_x )
+      game.add_player( player_o )
+      expect( game.start ).to eq true
+    end
+
+    it "should raise an error when there are not two players" do
+      # No player
+      expect{ game.start }.to raise_error("To start, require two players")
+      # One player
+      game.add_player( player_x )
+      expect{ game.start }.to raise_error("To start, require two players")
+    end
+  end
+
 end
