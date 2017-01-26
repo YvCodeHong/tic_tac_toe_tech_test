@@ -29,7 +29,7 @@ describe Game, 'features' do
   it "should let a player can claim a field if it is not already taken" do
     game.start
     game.claim_field(1,1)
-    expect( game.board[1-1] ).to be game.player1
+    expect( game.board[0][0] ).to be game.player1
     expect{ game.claim_field(1,1) }.to raise_error("The field has already been taken")
   end
 
@@ -41,6 +41,29 @@ describe Game, 'features' do
   end
 
   # A player wins if they claim all the fields in a row, column or diagonal
+  it "should let a player wins if they claim all the fields in a row, column or diagonal" do
+    # in a row
+    game.start
+    game.claim_field(1,1)
+    game.change_turn
+    game.claim_field(1,2)
+    game.change_turn
+    expect( game.claim_field(1,3) ).to eq("you win!")
+    # in a column
+    game.start
+    game.claim_field(1,1)
+    game.change_turn
+    game.claim_field(2,1)
+    game.change_turn
+    expect( game.claim_field(3,1) ).to eq("you win!")
+    # in a diagonal
+    game.start
+    game.claim_field(1,1)
+    game.change_turn
+    game.claim_field(2,2)
+    game.change_turn
+    expect( game.claim_field(3,3) ).to eq("you win!")
+  end
 
   # A game is over if a player wins
 

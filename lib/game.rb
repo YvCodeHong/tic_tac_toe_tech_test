@@ -3,9 +3,9 @@ class Game
   attr_accessor :player1, :player2, :current_player, :board
 
   def initialize
-    self.board = { 1-1=>false, 1-2=>false, 1-3=>false,
-                   2-1=>false, 2-2=>false, 2-3=>false,
-                   3-1=>false, 3-2=>false, 3-3=>false }
+    self.board = [ [false, false, false],
+                   [false, false, false],
+                   [false, false, false] ]
   end
 
   def add_player( player )
@@ -24,9 +24,15 @@ class Game
   end
 
   def claim_field( row, column )
+    row = row - 1
+    column = column - 1
     raise "The field has already been taken" if the_field_unavailable?( row, column )
-    self.board[row-column] = self.current_player
+    self.board[row][column] = self.current_player
     change_turn
+  end
+
+  def check_result
+    "You win!" if got_a_row?
   end
 
   private
@@ -52,7 +58,11 @@ class Game
   end
 
   def the_field_unavailable?( row, column )
-    self.board[row-column] != false
+    self.board[row][column] != false
+  end
+
+  def got_a_row?
+
   end
 
 end

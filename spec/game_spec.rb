@@ -69,7 +69,7 @@ describe Game do
 
     it "should mark the field by current player" do
       game.claim_field(1,1)
-      expect( game.board[1-1] ).to be game.player1
+      expect( game.board[0][0] ).to be game.player1
     end
 
     it "should raise an error when the field has already been taken" do
@@ -82,6 +82,23 @@ describe Game do
       expect( game.current_player ).to eq game.player2
     end
 
+  end
+
+  context "#check_result" do
+    before(:each) do
+      game.add_player( player_x )
+      game.add_player( player_o )
+      game.start
+    end
+    # A player wins if they claim all the fields in a row, column or diagonal
+    it "should give a message when a player claim all the fields in a row" do
+      game.claim_field(1,1)
+      game.change_turn
+      game.claim_field(1,2)
+      game.change_turn
+      game.claim_field(1,3)
+      expect( game.check_result ).to eq("You win!")
+    end
   end
 
 end
