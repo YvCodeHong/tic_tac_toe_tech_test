@@ -31,7 +31,7 @@ describe Game, 'features' do
     game.start
     game.claim_field(1,1)
     expect( game.board[1-1] ).to be game.current_player
-    expect{ game.claim_field(1,1) }.to raise_error("The field has already taken")
+    expect{ game.claim_field(1,1) }.to raise_error("The field has already been taken")
   end
 
   # A turn ends when a player claims a field

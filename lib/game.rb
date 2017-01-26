@@ -24,6 +24,7 @@ class Game
   end
 
   def claim_field( row, column )
+    raise "The field has already been taken" if the_field_unavailable?( row, column )
     self.board[row-column] = self.current_player
   end
 
@@ -47,6 +48,10 @@ class Game
 
   def set_player2_current_player
     self.current_player = self.player2
+  end
+
+  def the_field_unavailable?( row, column )
+    self.board[row-column] != false
   end
 
 end

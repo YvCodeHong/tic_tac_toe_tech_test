@@ -72,6 +72,11 @@ describe Game do
       expect( game.board[1-1] ).to be game.current_player
     end
 
+    it "should raise an error when the field has already been taken" do
+      game.claim_field(1,1)
+      expect{ game.claim_field(1,1) }.to raise_error("The field has already been taken")
+    end
+
   end
 
 end
