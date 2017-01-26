@@ -1,5 +1,6 @@
 require 'game'
 require 'player'
+require 'web_helper'
 
 describe Game, 'features' do
 
@@ -49,7 +50,7 @@ describe Game, 'features' do
     game.claim_field(1,2)
     game.change_turn
     expect( game.claim_field(1,3) ).to eq("You win!")
-    game.board = [ [false, false, false], [false, false, false], [false, false, false] ]
+    reset_board
     # in a column
     game.start
     game.claim_field(1,1)
@@ -57,7 +58,7 @@ describe Game, 'features' do
     game.claim_field(2,1)
     game.change_turn
     expect( game.claim_field(3,1) ).to eq("You win!")
-    game.board = [ [false, false, false], [false, false, false], [false, false, false] ]
+    reset_board
     # in a diagonal
     game.start
     game.claim_field(1,1)
