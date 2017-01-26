@@ -20,16 +20,6 @@ Build the business logic for a game of tic tac toe. It should be easy to impleme
 - Ruby
 - RSpec for test
 
-### User stories
-```
-
-```
-```
-
-```
-```
-
-```
 ### How to use
 1. Clone this repository to your local
 2. Open your terminal
