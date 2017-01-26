@@ -15,18 +15,18 @@ class Game
 
   def start
     raise "To start, require two players" if !player2_exist?
-    set_player1_current_player
+    set_player1_turn
     true
   end
 
-  def change_current_player
-    previous_turn_by_player1? ? set_player2_current_player : set_player1_current_player
+  def change_turn
+    previous_turn_by_player1? ? set_player2_turn : set_player1_turn
   end
 
   def claim_field( row, column )
     raise "The field has already been taken" if the_field_unavailable?( row, column )
     self.board[row-column] = self.current_player
-    change_current_player
+    change_turn
   end
 
   private
@@ -43,11 +43,11 @@ class Game
     self.current_player == self.player1
   end
 
-  def set_player1_current_player
+  def set_player1_turn
     self.current_player = self.player1
   end
 
-  def set_player2_current_player
+  def set_player2_turn
     self.current_player = self.player2
   end
 

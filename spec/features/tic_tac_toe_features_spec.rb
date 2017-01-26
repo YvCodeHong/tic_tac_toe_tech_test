@@ -21,7 +21,7 @@ describe Game, 'features' do
   it "should let players take turns until the game is over" do
     game.start
     expect( game.current_player ).to eq player1
-    game.change_current_player
+    game.change_turn
     expect( game.current_player ).to eq player2
   end
 

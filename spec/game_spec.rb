@@ -53,7 +53,7 @@ describe Game do
 
     it "should change current player" do
       expect( game.current_player ).to eq game.player1
-      game.change_current_player
+      game.change_turn
       expect( game.current_player ).to eq game.player2
     end
 
