@@ -33,6 +33,7 @@ class Game
       set_game_over
       return "You win!"
     end
+    set_game_over if all_fields_taken?
     change_turn
   end
 
@@ -42,6 +43,10 @@ class Game
 
   def set_game_over
     self.over = true
+  end
+
+  def all_fields_taken?
+    self.board.flatten.all?
   end
 
   private

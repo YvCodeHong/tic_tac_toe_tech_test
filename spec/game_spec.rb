@@ -127,4 +127,17 @@ describe Game do
     end
   end
 
+  context "#all_fields_taken?" do
+    it "should check all fields has been taken or not" do
+      game.board = [ [player_x, player_o, player_x],
+                     [player_x, player_x, player_o],
+                     [player_o, player_x, false] ]
+      expect( game.all_fields_taken? ).to eq false
+      game.board = [ [player_x, player_o, player_x],
+                     [player_x, player_x, player_o],
+                     [player_o, player_x, player_x] ]
+      expect( game.all_fields_taken? ).to eq true
+    end
+  end
+
 end

@@ -80,5 +80,13 @@ describe Game, 'features' do
   end
 
   # A game is over when all fields are taken
+  it "should game over when all fields are taken" do
+    game.start
+    game.board = [ [player1, player2, player1],
+                   [player1, player1, player2],
+                   [player2, player1, false] ]
+    game.claim_field(3,3)
+    expect( game.over ).to eq true
+  end
 
 end
