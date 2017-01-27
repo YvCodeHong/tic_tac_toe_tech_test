@@ -11,9 +11,11 @@ class Board
   end
 
   def create
-    row = []
-    size.times{ row << false }
-    size.times{ self.all_fields << row.dup }
+    size.times do
+      row = []
+      size.times{ row << false }
+      self.all_fields << row
+    end
   end
 
 end
