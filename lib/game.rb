@@ -89,11 +89,19 @@ class Game
   end
 
   def got_a_diagonal
-    target = []
+    # one diagonal / <= this way
+    target1 = []
     for i in 0...board.size
-      target << board.all_fields[i][i]
+      target1 << board.all_fields[i][i]
     end
-    all_same_player?( target )
+    # another diagonal \ <= this way
+    target2 = []
+    target_column = board.size - 1
+    for i in 0...board.size
+      target2 << board.all_fields[i][target_column-i]
+    end
+    # check one of them is true
+    all_same_player?( target1 ) || all_same_player?( target2 )
   end
 
   def all_same_player?( target )
