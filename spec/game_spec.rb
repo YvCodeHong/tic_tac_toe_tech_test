@@ -66,7 +66,8 @@ describe Game do
       game.add_player( player_x )
       game.add_player( player_o )
       game.start
-      allow( board ).to receive( :all_fields ).and_return( [[false,false,false],[false,false,false],[false,false,false]])
+      allow( board ).to receive( :size ).and_return( 3 )
+      allow( board ).to receive( :all_fields ).and_return( [[false,false,false],[false,false,false],[false,false,false]] )
     end
 
     it "should mark the field by current player" do
@@ -87,12 +88,15 @@ describe Game do
   end
 
   context "#win?" do
+
     before(:each) do
       game.add_player( player_x )
       game.add_player( player_o )
       game.start
-      allow( board ).to receive( :all_fields ).and_return( [[false,false,false],[false,false,false],[false,false,false]])
+      allow( board ).to receive( :size ).and_return( 3 )
+      allow( board ).to receive( :all_fields ).and_return( [[false,false,false],[false,false,false],[false,false,false]] )
     end
+    
     # A player wins if they claim all the fields in a row, column or diagonal
     it "should give a message when a player claim all the fields in a row" do
       game.claim_field(1,1)

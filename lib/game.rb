@@ -88,9 +88,8 @@ class Game
   end
 
   def got_a_diagonal
-    number = board.all_fields.count
     target = []
-    for i in 0...number
+    for i in 0...board.size
       target << board.all_fields[i][i]
     end
     all_same_player?( target )
