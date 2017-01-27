@@ -30,7 +30,7 @@ class Game
     @row, @column = row - 1, column - 1 #change number to access board array
     raise "The field has already been taken" if field_unavailable?
     take_field
-    set_game_over if all_fields_taken? || win?
+    set_game_over if game_over?
     return "#{current_player} win!" if win?
     return "draw!" if all_fields_taken?
     change_turn
@@ -45,7 +45,7 @@ class Game
   end
 
   def all_fields_taken?
-    board.all_fields.flatten.all?
+    board.fields.flatten.all?
   end
 
   private
@@ -71,20 +71,20 @@ class Game
   end
 
   def take_field
-    self.board.all_fields[self.row][self.column] = current_player
+    self.board.fields[self.row][self.column] = current_player
   end
 
   def field_unavailable?
-    board.all_fields[self.row][self.column] != false
+    board.fields[self.row][self.column] != false
   end
 
   def got_a_row?
-    target = board.all_fields[self.row]
+    target = board.fields[self.row]
     all_same_player?( target )
   end
 
   def got_a_column?
-    target = board.all_fields.map.each{ |row| row[self.column] } #collect players from the column
+    target = board.fields.map.each{ |row| row[self.column] } #collect players from the column
     all_same_player?( target )
   end
 
@@ -92,13 +92,13 @@ class Game
     # one diagonal / <= this way
     target1 = []
     for i in 0...board.size
-      target1 << board.all_fields[i][i]
+      target1 << board.fields[i][i]
     end
     # another diagonal \ <= this way
     target2 = []
     target_column = board.size - 1
     for i in 0...board.size
-      target2 << board.all_fields[i][target_column-i]
+      target2 << board.fields[i][target_column-i]
     end
     # check one of them is true
     all_same_player?( target1 ) || all_same_player?( target2 )
@@ -106,6 +106,10 @@ class Game
 
   def all_same_player?( target )
     target.all?{ |player| player == current_player }
+  end
+
+  def game_over?
+    all_fields_taken? || win?
   end
 
 end
