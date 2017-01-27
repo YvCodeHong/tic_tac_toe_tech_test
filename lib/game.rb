@@ -5,10 +5,8 @@ class Game
   attr_accessor :player1, :player2, :current_player, :board, :over
   attr_reader :row, :column
 
-  def initialize
-    self.board = [ [false, false, false],
-                   [false, false, false],
-                   [false, false, false] ]
+  def initialize( board )
+    self.board = board
     self.over = false
   end
 
@@ -46,7 +44,7 @@ class Game
   end
 
   def all_fields_taken?
-    board.flatten.all?
+    board.all_fields.flatten.all?
   end
 
   private
@@ -72,28 +70,28 @@ class Game
   end
 
   def take_field
-    self.board[self.row][self.column] = current_player
+    self.board.all_fields[self.row][self.column] = current_player
   end
 
   def field_unavailable?
-    board[self.row][self.column] != false
+    board.all_fields[self.row][self.column] != false
   end
 
   def got_a_row?
-    target = board[self.row]
+    target = board.all_fields[self.row]
     all_same_player?( target )
   end
 
   def got_a_column?
-    target = board.map.each{ |row| row[self.column] } #collect players from the column
+    target = board.all_fields.map.each{ |row| row[self.column] } #collect players from the column
     all_same_player?( target )
   end
 
   def got_a_diagonal
-    number = board.count
+    number = board.all_fields.count
     target = []
     for i in 0...number
-      target << board[i][i]
+      target << board.all_fields[i][i]
     end
     all_same_player?( target )
   end

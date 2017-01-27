@@ -1,3 +1,3 @@
 def reset_board
-  game.board = [ [false, false, false], [false, false, false], [false, false, false] ]
+  game.board.all_fields = [ [false, false, false], [false, false, false], [false, false, false] ]
 end

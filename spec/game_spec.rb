@@ -2,10 +2,11 @@ require 'game'
 
 describe Game do
 
-  subject( :game ){ described_class.new }
+  subject( :game ){ described_class.new( board ) }
   let( :player_x ){ double :player_x }
   let( :player_o ){ double :player_o }
   let( :player_p ){ double :player_p }
+  let( :board    ){ double :board    }
 
   context "#add_player" do
     it "should add player" do
@@ -65,11 +66,12 @@ describe Game do
       game.add_player( player_x )
       game.add_player( player_o )
       game.start
+      allow( board ).to receive( :all_fields ).and_return( [[false,false,false],[false,false,false],[false,false,false]])
     end
 
     it "should mark the field by current player" do
       game.claim_field(1,1)
-      expect( game.board[0][0] ).to be game.player1
+      expect( game.board.all_fields[0][0] ).to be game.player1
     end
 
     it "should raise an error when the field has already been taken" do
@@ -89,6 +91,7 @@ describe Game do
       game.add_player( player_x )
       game.add_player( player_o )
       game.start
+      allow( board ).to receive( :all_fields ).and_return( [[false,false,false],[false,false,false],[false,false,false]])
     end
     # A player wins if they claim all the fields in a row, column or diagonal
     it "should give a message when a player claim all the fields in a row" do
@@ -129,13 +132,9 @@ describe Game do
 
   context "#all_fields_taken?" do
     it "should check all fields has been taken or not" do
-      game.board = [ [player_x, player_o, player_x],
-                     [player_x, player_x, player_o],
-                     [player_o, player_x, false] ]
+      allow( board ).to receive( :all_fields ).and_return( [[player_x, player_o, player_x],[player_x, player_x, player_o],[player_o, player_x, false]])
       expect( game.all_fields_taken? ).to eq false
-      game.board = [ [player_x, player_o, player_x],
-                     [player_x, player_x, player_o],
-                     [player_o, player_x, player_x] ]
+      allow( board ).to receive( :all_fields ).and_return( [[player_x, player_o, player_x],[player_x, player_x, player_o],[player_o, player_x, player_o]])
       expect( game.all_fields_taken? ).to eq true
     end
   end

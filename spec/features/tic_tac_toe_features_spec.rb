@@ -1,10 +1,11 @@
 require 'game'
 require 'player'
 require 'web_helper'
+require 'board'
 
 describe Game, 'features' do
 
-  let( :game ){ Game.new }
+  let( :game ){ Game.new( Board.new(3) ) }
   let( :player1 ){ Player.new }
   let( :player2 ){ Player.new }
 
@@ -30,7 +31,7 @@ describe Game, 'features' do
   it "should let a player can claim a field if it is not already taken" do
     game.start
     game.claim_field(1,1)
-    expect( game.board[0][0] ).to be game.player1
+    expect( game.board.all_fields[0][0] ).to be game.player1
     expect{ game.claim_field(1,1) }.to raise_error("The field has already been taken")
   end
 
@@ -82,9 +83,9 @@ describe Game, 'features' do
   # A game is over when all fields are taken
   it "should game over when all fields are taken" do
     game.start
-    game.board = [ [player1, player2, player1],
-                   [player1, player1, player2],
-                   [player2, player1, false] ]
+    game.board.all_fields = [ [player1, player2, player1],
+                              [player1, player1, player2],
+                              [player2, player1, false] ]
     game.claim_field(3,3)
     expect( game.over ).to eq true
   end
