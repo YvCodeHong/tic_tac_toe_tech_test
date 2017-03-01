@@ -37,7 +37,7 @@ class Game
   end
 
   def win?
-    got_a_row? || got_a_column? || got_a_diagonal
+    got_a_row? || got_a_column? || got_a_diagonal?
   end
 
   def set_game_over
@@ -88,20 +88,24 @@ class Game
     all_same_player?( target )
   end
 
-  def got_a_diagonal
-    # one diagonal / <= this way
-    target1 = []
+  def got_a_diagonal?
+    all_same_player?( get_players_from_one_diagonal ) || all_same_player?( get_players_from_another_diagonal )
+  end
+
+  def get_players_from_one_diagonal # one diagonal / <= this way
+    target = []
     for i in 0...board.size
-      target1 << board.fields[i][i]
+      target << board.fields[i][i]
     end
-    # another diagonal \ <= this way
-    target2 = []
-    target_column = board.size - 1
+    target
+  end
+
+  def get_players_from_another_diagonal # another diagonal \ <= this way
+    target, target_column = [], board.size - 1
     for i in 0...board.size
-      target2 << board.fields[i][target_column-i]
+      target << board.fields[i][target_column-i]
     end
-    # check one of them is true
-    all_same_player?( target1 ) || all_same_player?( target2 )
+    target
   end
 
   def all_same_player?( target )
