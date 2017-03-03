@@ -3,7 +3,7 @@ require_relative './board.rb'
 
 class Game
 
-  attr_accessor :player1, :player2, :current_player, :board, :over
+  attr_accessor :player1, :player2, :current_player, :previous_player, :board, :over
   attr_reader :row, :column
 
   def initialize( board )
@@ -31,10 +31,8 @@ class Game
     set_column( column ) #change number to access board array
     raise "The field has already been taken" if field_unavailable?
     take_field
-    set_game_over if game_over?
-    return "#{current_player} win!" if win?
-    return "draw!" if all_fields_taken?
     change_turn
+    check_game_over
   end
 
   def win?
@@ -64,11 +62,13 @@ class Game
   end
 
   def set_player1_turn
-    self.current_player = player1
+    self.current_player  = player1
+    self.previous_player = player2
   end
 
   def set_player2_turn
-    self.current_player = player2
+    self.current_player  = player2
+    self.previous_player = player1
   end
 
   def set_row( row )
@@ -81,6 +81,12 @@ class Game
 
   def take_field
     self.board.fields[self.row][self.column] = current_player
+  end
+
+  def check_game_over
+    set_game_over if game_over?
+    return "#{previous_player} win!" if win?
+    return "draw!" if all_fields_taken?
   end
 
   def field_unavailable?
@@ -118,7 +124,7 @@ class Game
   end
 
   def all_same_player?( target )
-    target.all?{ |player| player == current_player }
+    target.all?{ |player| player == previous_player }
   end
 
   def game_over?
