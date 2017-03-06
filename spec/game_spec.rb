@@ -44,102 +44,43 @@ describe Game do
     end
   end
 
-  context "#change_current_player" do
-
-    before(:each) do
-      game.add_player( player_x )
-      game.add_player( player_o )
-      game.start
-    end
-
-    it "should change current player" do
-      expect( game.current_player ).to eq game.player1
-      game.change_turn
-      expect( game.current_player ).to eq game.player2
-    end
-
-  end
-
   context "#claim_field" do
 
     before(:each) do
       game.add_player( player_x )
       game.add_player( player_o )
       game.start
-      allow( board ).to receive( :size ).and_return( 3 )
-      allow( board ).to receive( :fields ).and_return( [[false,false,false],[false,false,false],[false,false,false]] )
-    end
-
-    it "should mark the field by current player" do
-      game.claim_field(1,1)
-      expect( game.board.fields[0][0] ).to be game.player1
-    end
-
-    it "should raise an error when the field has already been taken" do
-      game.claim_field(1,1)
-      expect{ game.claim_field(1,1) }.to raise_error("The field has already been taken")
+      allow( board ).to receive( :take_field )
+      allow( board ).to receive( :win? ).and_return( false )
+      allow( board ).to receive( :all_fields_taken? ).and_return( false )
     end
 
     it "should change turn when a player claims a field" do
       game.claim_field(1,1)
       expect( game.current_player ).to eq game.player2
-    end
-
-  end
-
-  context "#win?" do
-
-    before(:each) do
-      game.add_player( player_x )
-      game.add_player( player_o )
-      game.start
-      allow( board ).to receive( :size ).and_return( 3 )
-      allow( board ).to receive( :fields ).and_return( [[false,false,false],[false,false,false],[false,false,false]] )
-    end
-
-    # A player wins if they claim all the fields in a row, column or diagonal
-    it "should give a message when a player claim all the fields in a row" do
-      game.claim_field(1,1)
-      game.change_turn
-      game.claim_field(1,2)
-      game.change_turn
-      game.claim_field(1,3)
-      game.current_player = game.player1
-      expect( game.win? ).to be true
-    end
-    it "should give a message when a player claim all the fields in a column" do
-      game.claim_field(1,1)
-      game.change_turn
-      game.claim_field(2,1)
-      game.change_turn
-      game.claim_field(3,1)
-      game.current_player = game.player1
-      expect( game.win? ).to be true
-    end
-    it "should give a message when a player claim all the fields in a diagonal" do
-      game.claim_field(1,1)
-      game.change_turn
-      game.claim_field(2,2)
-      game.change_turn
       game.claim_field(3,3)
-      game.current_player = game.player1
-      expect( game.win? ).to be true
+      expect( game.current_player ).to eq game.player1
     end
+
   end
 
-  context "#set_game_over" do
-    it "should set over setter true" do
-      game.set_game_over
-      expect( game.over ).to eq true
+  context "#check_game_over" do
+    context "when it is draw" do
+      it "should return a message and set over setter true" do
+        allow( board ).to receive( :win? ).and_return( false )
+        allow( board ).to receive( :all_fields_taken? ).and_return( true )
+        expect( game.check_game_over ).to eq( "draw!" )
+        expect( game.over ).to eq true
+      end
     end
-  end
-
-  context "#all_fields_taken?" do
-    it "should check all fields has been taken or not" do
-      allow( board ).to receive( :fields ).and_return( [[player_x, player_o, player_x],[player_x, player_x, player_o],[player_o, player_x, false]])
-      expect( game.all_fields_taken? ).to eq false
-      allow( board ).to receive( :fields ).and_return( [[player_x, player_o, player_x],[player_x, player_x, player_o],[player_o, player_x, player_o]])
-      expect( game.all_fields_taken? ).to eq true
+    context "when a player won" do
+      it "should return a message and set over setter true" do
+        allow( board ).to receive( :win? ).and_return( true )
+        allow( board ).to receive( :all_fields_taken? ).and_return( false )
+        game.current_player = player_x
+        expect( game.check_game_over ).to eq( "#{player_x} win!" )
+        expect( game.over ).to eq true
+      end
     end
   end
 
