@@ -18,17 +18,15 @@ class Game
   def start
     raise "To start, require two players" if !player2_exist?
     set_player1_turn
-    true
   end
 
   def claim_field( row, column )
     board.take_field( row, column, self.current_player )
-    check_game_over
-    change_turn
+    set_game_over if game_over?
+    self.over == true ? display_game_over_message : change_turn
   end
 
-  def check_game_over
-    set_game_over if game_over?
+  def display_game_over_message
     return "#{current_player} win!" if self.board.win?
     return "draw!" if self.board.all_fields_taken?
   end

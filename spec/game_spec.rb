@@ -32,7 +32,9 @@ describe Game do
     it "should start a game with two players" do
       game.add_player( player_x )
       game.add_player( player_o )
-      expect( game.start ).to eq true
+      game.start
+      expect( game.player1 ).to eq player_x
+      expect( game.player2 ).to eq player_o
     end
 
     it "should raise an error when there are not two players" do
@@ -41,6 +43,13 @@ describe Game do
       # One player
       game.add_player( player_x )
       expect{ game.start }.to raise_error("To start, require two players")
+    end
+
+    it "should set turn for player1" do
+      game.add_player( player_x )
+      game.add_player( player_o )
+      game.start
+      expect( game.current_player ).to eq player_x
     end
   end
 
@@ -51,37 +60,36 @@ describe Game do
       game.add_player( player_o )
       game.start
       allow( board ).to receive( :take_field )
-      allow( board ).to receive( :win? ).and_return( false )
-      allow( board ).to receive( :all_fields_taken? ).and_return( false )
     end
 
     it "should change turn when a player claims a field" do
+      allow( board ).to receive( :win? ).and_return( false )
+      allow( board ).to receive( :all_fields_taken? ).and_return( false )
       game.claim_field(1,1)
       expect( game.current_player ).to eq game.player2
       game.claim_field(3,3)
       expect( game.current_player ).to eq game.player1
     end
 
-  end
-
-  context "#check_game_over" do
     context "when it is draw" do
       it "should return a message and set over setter true" do
         allow( board ).to receive( :win? ).and_return( false )
         allow( board ).to receive( :all_fields_taken? ).and_return( true )
-        expect( game.check_game_over ).to eq( "draw!" )
+        expect( game.claim_field(1,1) ).to eq( "draw!" )
         expect( game.over ).to eq true
       end
     end
+
     context "when a player won" do
       it "should return a message and set over setter true" do
         allow( board ).to receive( :win? ).and_return( true )
         allow( board ).to receive( :all_fields_taken? ).and_return( false )
         game.current_player = player_x
-        expect( game.check_game_over ).to eq( "#{player_x} win!" )
+        expect( game.claim_field(1,1) ).to eq( "#{player_x} win!" )
         expect( game.over ).to eq true
       end
     end
+
   end
 
 end

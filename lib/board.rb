@@ -61,7 +61,7 @@ class Board
   end
 
   def get_players_from_another_diagonal # another diagonal \ <= this way
-    target, target_column = [], board.size - 1
+    target, target_column = [], self.size - 1
     for i in 0...self.size
       target << self.fields[i][target_column-i]
     end
