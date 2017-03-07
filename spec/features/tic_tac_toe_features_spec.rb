@@ -6,8 +6,8 @@ require 'board'
 describe Game, 'features' do
 
   let( :game ){ Game.new( Board.new(3) ) }
-  let( :player_x ){ Player.new }
-  let( :player_o ){ Player.new }
+  let( :player_x ){ Player.new( "X" ) }
+  let( :player_o ){ Player.new( "O" ) }
 
   before(:each) do
     game.add_player( player_x )
