@@ -1,21 +1,13 @@
 class Board
 
-  attr_accessor :fields, :row, :column, :current_player
-  attr_reader :size
+  attr_accessor :fields
+  attr_reader   :size, :row, :column, :current_player
 
   def initialize(size)
     raise "Set size more than 3" if size < 3
     @size = size
     @fields = []
-    create
-  end
-
-  def create
-    size.times do
-      row = []
-      size.times{ row << false }
-      self.fields << row
-    end
+    create_fields
   end
 
   def take_field( row, column, player )
@@ -33,6 +25,14 @@ class Board
   end
 
   private
+
+  def create_fields
+    size.times do
+      row = []
+      size.times{ row << false }
+      self.fields << row
+    end
+  end
 
   def field_unavailable?
     self.fields[self.row][self.column] != false

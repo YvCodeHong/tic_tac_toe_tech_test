@@ -3,7 +3,8 @@ require_relative './board.rb'
 
 class Game
 
-  attr_accessor :player1, :player2, :current_player, :board, :over
+  attr_accessor :current_player, :board, :over
+  attr_reader :player1, :player2
 
   def initialize( board )
     self.board = board
@@ -12,7 +13,7 @@ class Game
 
   def add_player( player )
     raise "Already two players exist" if player2_exist?
-    player1_exist? ? self.player2 = player : self.player1 = player
+    player1_exist? ? @player2 = player : @player1 = player
   end
 
   def start
@@ -24,11 +25,6 @@ class Game
     board.take_field( row, column, self.current_player )
     set_game_over if game_over?
     self.over == true ? display_game_over_message : change_turn
-  end
-
-  def display_game_over_message
-    return "#{current_player} win!" if self.board.win?
-    return "draw!" if self.board.all_fields_taken?
   end
 
   private
@@ -63,6 +59,11 @@ class Game
 
   def set_game_over
     self.over = true
+  end
+
+  def display_game_over_message
+    return "#{current_player} win!" if self.board.win?
+    return "draw!" if self.board.all_fields_taken?
   end
 
 end
