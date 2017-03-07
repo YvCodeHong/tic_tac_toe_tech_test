@@ -1,6 +1,6 @@
 # Tic Tac Toe Tech Test
 
-This is one of Makers Academy's tech test practices on Week10. The task is to write code following the brief;
+This is one of Makers Academy's challenge on Week10. The task is to write code following the brief;
 
 ### The brief
 
