@@ -62,7 +62,7 @@ class Game
   end
 
   def display_game_over_message
-    return "#{current_player} win!" if self.board.win?
+    return "#{current_player.name} win!" if self.board.win?
     return "draw!" if self.board.all_fields_taken?
   end
 

@@ -3,10 +3,10 @@ require 'game'
 describe Game do
 
   subject( :game ){ described_class.new( board ) }
-  let( :player_x ){ double :player_x }
-  let( :player_o ){ double :player_o }
-  let( :player_p ){ double :player_p }
-  let( :board    ){ double :board    }
+  let( :player_x ){ double :player_x, name: "X" }
+  let( :player_o ){ double :player_o, name: "O" }
+  let( :player_p ){ double :player_p, name: "P"}
+  let( :board    ){ double :board }
 
   context "#add_player" do
     it "should add player" do
@@ -85,7 +85,7 @@ describe Game do
         allow( board ).to receive( :win? ).and_return( true )
         allow( board ).to receive( :all_fields_taken? ).and_return( false )
         game.current_player = player_x
-        expect( game.claim_field(1,1) ).to eq( "#{player_x} win!" )
+        expect( game.claim_field(1,1) ).to eq( "#{player_x.name } win!" )
         expect( game.over ).to eq( true )
       end
     end

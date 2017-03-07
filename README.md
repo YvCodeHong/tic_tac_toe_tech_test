@@ -1,4 +1,4 @@
-# Tic Tac Toe Tech Test
+# Tic Tac Toe
 
 This is one of Makers Academy's challenge on Week10. The task is to write code following the brief;
 
