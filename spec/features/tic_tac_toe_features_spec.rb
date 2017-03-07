@@ -24,24 +24,24 @@ describe Game, 'features' do
   # Players take turns until the game is over
   it "should let players take turns" do
     game.start
-    expect( game.current_player ).to eq player_x
+    expect( game.current_player ).to eq( player_x )
     game.claim_field(1,1)
-    expect( game.current_player ).to eq player_o
+    expect( game.current_player ).to eq( player_o )
   end
 
   # A player can claim a field if it is not already taken
   it "should let a player can claim a field if it is not already taken" do
     game.start
     game.claim_field(1,1)
-    expect( game.board.fields[0][0] ).to be game.player1
-    expect{ game.claim_field(1,1) }.to raise_error("The field has already been taken")
+    expect( game.board.fields[0][0] ).to be( game.player1 )
+    expect{ game.claim_field(1,1) }.to raise_error( "The field has already been taken" )
   end
 
   # A turn ends when a player claims a field
   it "should end a turn when a player claims a field" do
     game.start
     game.claim_field(1,1)
-    expect( game.current_player ).to eq game.player2
+    expect( game.current_player ).to eq( game.player2 )
   end
 
   # A player wins if they claim all the fields in a row, column or diagonal
@@ -53,7 +53,7 @@ describe Game, 'features' do
     game.claim_field(2,2)
     game.claim_field(1,2)
     game.claim_field(3,3)
-    expect( game.claim_field(1,3) ).to eq("#{player} win!")
+    expect( game.claim_field(1,3) ).to eq( "#{player} win!" )
     reset_board
     # in a column
     game.start
@@ -62,7 +62,7 @@ describe Game, 'features' do
     game.claim_field(1,2)
     game.claim_field(2,1)
     game.claim_field(2,2)
-    expect( game.claim_field(3,1) ).to eq("#{player} win!")
+    expect( game.claim_field(3,1) ).to eq( "#{player} win!" )
     reset_board
     # in a diagonal
     game.start
@@ -71,7 +71,7 @@ describe Game, 'features' do
     game.claim_field(1,2)
     game.claim_field(2,2)
     game.claim_field(2,3)
-    expect( game.claim_field(3,3) ).to eq("#{player} win!")
+    expect( game.claim_field(3,3) ).to eq( "#{player} win!" )
     reset_board
     # in a diagonal
     game.start
@@ -80,7 +80,7 @@ describe Game, 'features' do
     game.claim_field(1,1)
     game.claim_field(2,2)
     game.claim_field(2,1)
-    expect( game.claim_field(3,1) ).to eq("#{player} win!")
+    expect( game.claim_field(3,1) ).to eq( "#{player} win!" )
   end
 
   # A game is over if a player wins
@@ -91,7 +91,7 @@ describe Game, 'features' do
     game.claim_field(1,2)
     game.claim_field(3,3)
     game.claim_field(1,3)
-    expect( game.over ).to eq true
+    expect( game.over ).to eq( true )
   end
 
   # A game is over when all fields are taken
@@ -101,8 +101,8 @@ describe Game, 'features' do
                           [player_x, player_o, player_o],
                           [player_o, player_x, false] ]
 
-    expect( game.claim_field(3,3) ).to eq("draw!")
-    expect( game.over ).to eq true
+    expect( game.claim_field(3,3) ).to eq( "draw!" )
+    expect( game.over ).to eq( true )
   end
 
 end

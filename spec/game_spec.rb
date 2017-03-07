@@ -11,20 +11,20 @@ describe Game do
   context "#add_player" do
     it "should add player" do
       game.add_player( player_x )
-      expect( game.player1 ).to eq player_x
+      expect( game.player1 ).to eq( player_x )
     end
 
     it "should add the player to player2 when player1 exist" do
       game.add_player( player_x )
       game.add_player( player_o )
-      expect( game.player1 ).to eq player_x
-      expect( game.player2 ).to eq player_o
+      expect( game.player1 ).to eq( player_x )
+      expect( game.player2 ).to eq( player_o )
     end
 
     it "should not add any players when player1 and player2 exist" do
       game.add_player( player_x )
       game.add_player( player_o )
-      expect{ game.add_player( player_p ) }.to raise_error("Already two players exist")
+      expect{ game.add_player( player_p ) }.to raise_error( "Already two players exist" )
     end
   end
 
@@ -33,23 +33,23 @@ describe Game do
       game.add_player( player_x )
       game.add_player( player_o )
       game.start
-      expect( game.player1 ).to eq player_x
-      expect( game.player2 ).to eq player_o
+      expect( game.player1 ).to eq( player_x )
+      expect( game.player2 ).to eq( player_o )
     end
 
     it "should raise an error when there are not two players" do
       # No player
-      expect{ game.start }.to raise_error("To start, require two players")
+      expect{ game.start }.to raise_error( "To start, require two players" )
       # One player
       game.add_player( player_x )
-      expect{ game.start }.to raise_error("To start, require two players")
+      expect{ game.start }.to raise_error( "To start, require two players" )
     end
 
     it "should set turn for player1" do
       game.add_player( player_x )
       game.add_player( player_o )
       game.start
-      expect( game.current_player ).to eq player_x
+      expect( game.current_player ).to eq( player_x )
     end
   end
 
@@ -66,9 +66,9 @@ describe Game do
       allow( board ).to receive( :win? ).and_return( false )
       allow( board ).to receive( :all_fields_taken? ).and_return( false )
       game.claim_field(1,1)
-      expect( game.current_player ).to eq game.player2
+      expect( game.current_player ).to eq( game.player2 )
       game.claim_field(3,3)
-      expect( game.current_player ).to eq game.player1
+      expect( game.current_player ).to eq( game.player1 )
     end
 
     context "when it is draw" do
@@ -76,7 +76,7 @@ describe Game do
         allow( board ).to receive( :win? ).and_return( false )
         allow( board ).to receive( :all_fields_taken? ).and_return( true )
         expect( game.claim_field(1,1) ).to eq( "draw!" )
-        expect( game.over ).to eq true
+        expect( game.over ).to eq( true )
       end
     end
 
@@ -86,7 +86,7 @@ describe Game do
         allow( board ).to receive( :all_fields_taken? ).and_return( false )
         game.current_player = player_x
         expect( game.claim_field(1,1) ).to eq( "#{player_x} win!" )
-        expect( game.over ).to eq true
+        expect( game.over ).to eq( true )
       end
     end
 
